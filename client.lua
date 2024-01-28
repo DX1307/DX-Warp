@@ -7,7 +7,7 @@ local PlayerId  = PlayerPedId()
 CreateThread(function()
 	while true do
         local sleep = true
-		Wait(12)
+		Wait(7)
 		for k, v in pairs(Config.TeleportList) do
 			if GetDistanceBetweenCoords(GetEntityCoords(PlayerId), v.coords, true) < v.marker.distance then
 				sleep = false
@@ -29,7 +29,7 @@ CreateThread(function()
             end
 		end
         if sleep then
-            Wait(1000)
+            Wait(7)
         end
 	end
 end)
