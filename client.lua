@@ -4,32 +4,42 @@ local PlayerPed = GetPlayerPed(-1)
 local PlayerId  = PlayerPedId()
 
 -- @ลูปวาป
+
+CreateThread(function()
+	while true do
+		for k, v in pairs(Config.TeleportList) do
+			if GetDistanceBetweenCoords(GetEntityCoords(PlayerId), v.coords, true) < v.marker.distance then
+                DrawMarker(v.marker.type, v.coords.x, v.coords.y, v.coords.z, 0, 0, 0, 0, 0, 0, v.marker.size.x, v.marker.size.y, v.marker.size.z, v.marker.color.r, v.marker.color.g, v.marker.color.b, 100, false, true, 2, false, false, false, false)
+            end
+		end
+        Wait(9)
+	end
+end)
+
+
 CreateThread(function()
 	while true do
         local sleep = true
-		Wait(7)
+		Wait(12)
 		for k, v in pairs(Config.TeleportList) do
-			if GetDistanceBetweenCoords(GetEntityCoords(PlayerId), v.coords, true) < v.marker.distance then
-				sleep = false
-                DrawMarker(v.marker.type, v.coords.x, v.coords.y, v.coords.z, 0, 0, 0, 0, 0, 0, v.marker.size.x, v.marker.size.y, v.marker.size.z, v.marker.color.r, v.marker.color.g, v.marker.color.b, 100, false, true, 2, false, false, false, false)
-                if GetDistanceBetweenCoords(GetEntityCoords(PlayerId), v.coords, true) < 1.5 then
-                    DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + Config.HighText, '<font face="'.. Config.Fonts ..'">'.. v.title ..'</font>')
-                    if IsControlJustReleased(0, 38) then
-                        if not IsPedInAnyVehicle(PlayerPed, true) and not v.enableVehicle then
-                            ESX.TriggerServerCallback("DX-Warp:Bypass", function(result)
-                                if result then
-                                    Teleport(v)
-                                end
-                            end, v)
-                        else
-                            Config.Notification('แจ้งเตือน', 'ไม่อนุญาติให้นำรถไป', 5000, 'error')
-                        end
+			if GetDistanceBetweenCoords(GetEntityCoords(PlayerId), v.coords, true) < 1.5 then
+                sleep = false
+                DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + Config.HighText, '<font face="'.. Config.Fonts ..'">'.. v.title ..'</font>')
+                if IsControlJustReleased(0, 38) then
+                    if not IsPedInAnyVehicle(PlayerPed, true) and not v.enableVehicle then
+                        ESX.TriggerServerCallback("DX-Warp:Bypass", function(result)
+                            if result then
+                                Teleport(v)
+                            end
+                        end, v)
+                    else
+                        Config.Notification('แจ้งเตือน', 'ไม่อนุญาติให้นำรถไป', 5000, 'error')
                     end
                 end
             end
 		end
         if sleep then
-            Wait(7)
+            Wait(100)
         end
 	end
 end)
