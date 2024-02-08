@@ -3,8 +3,8 @@ ESX = exports.es_extended:getSharedObject()
 -- @ลูปวาป
 CreateThread(function()
 	while true do
+        local PlayerId  = PlayerPedId()
 		for k, v in pairs(Config.TeleportList) do
-            local PlayerId  = PlayerPedId()
 			if GetDistanceBetweenCoords(GetEntityCoords(PlayerId), v.coords, true) < v.marker.distance then
                 DrawMarker(v.marker.type, v.coords.x, v.coords.y, v.coords.z, 0, 0, 0, 0, 0, 0, v.marker.size.x, v.marker.size.y, v.marker.size.z, v.marker.color.r, v.marker.color.g, v.marker.color.b, 100, false, true, 2, false, false, false, false)
             end
@@ -18,6 +18,7 @@ CreateThread(function()
 	while true do
         local sleep = true
 		Wait(12)
+        local PlayerId  = PlayerPedId()
         local PlayerPed = GetPlayerPed(-1)
 		for k, v in pairs(Config.TeleportList) do
 			if GetDistanceBetweenCoords(GetEntityCoords(PlayerId), v.coords, true) < 2.0 then
