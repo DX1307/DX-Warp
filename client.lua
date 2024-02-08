@@ -9,7 +9,7 @@ CreateThread(function()
                 DrawMarker(v.marker.type, v.coords.x, v.coords.y, v.coords.z, 0, 0, 0, 0, 0, 0, v.marker.size.x, v.marker.size.y, v.marker.size.z, v.marker.color.r, v.marker.color.g, v.marker.color.b, 100, false, true, 2, false, false, false, false)
             end
 		end
-        Wait(7)
+        Wait(0)
 	end
 end)
 
